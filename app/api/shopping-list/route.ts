@@ -44,6 +44,15 @@ export async function GET(request: NextRequest) {
 // POST endpoint - create a new shopping list
 export async function POST(request: NextRequest) {
   try {
+    // Try to import the database connection
+    let db;
+    try {
+      db = (await import('@/lib/db')).default;
+    } catch (importError) {
+      console.error('Database connection error:', importError);
+      return NextResponse.json({ error: 'Database connection not available' }, { status: 503 });
+    }
+
     const body = await request.json()
     
     if (!body.name) {
@@ -64,6 +73,15 @@ export async function POST(request: NextRequest) {
 // PUT endpoint - update a shopping list
 export async function PUT(request: NextRequest) {
   try {
+    // Try to import the database connection
+    let db;
+    try {
+      db = (await import('@/lib/db')).default;
+    } catch (importError) {
+      console.error('Database connection error:', importError);
+      return NextResponse.json({ error: 'Database connection not available' }, { status: 503 });
+    }
+
     const body = await request.json()
     const searchParams = request.nextUrl.searchParams
     const listId = searchParams.get('listId')
@@ -95,6 +113,15 @@ export async function PUT(request: NextRequest) {
 // DELETE endpoint - delete a shopping list
 export async function DELETE(request: NextRequest) {
   try {
+    // Try to import the database connection
+    let db;
+    try {
+      db = (await import('@/lib/db')).default;
+    } catch (importError) {
+      console.error('Database connection error:', importError);
+      return NextResponse.json({ error: 'Database connection not available' }, { status: 503 });
+    }
+
     const searchParams = request.nextUrl.searchParams
     const listId = searchParams.get('listId')
     
@@ -116,4 +143,7 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
+
+
+
 
