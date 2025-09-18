@@ -26,12 +26,7 @@ export function ShoppingList({ listId, initialName }: ShoppingListProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Fetch items when component mounts
-  useEffect(() => {
-    fetchItems()
-  }, [listId, fetchItems])
-
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     try {
       setIsLoading(true)
       const response = await fetch(`/api/shopping-list-items?listId=${listId}`)
@@ -46,7 +41,12 @@ export function ShoppingList({ listId, initialName }: ShoppingListProps) {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [listId])
+
+  // Fetch items when component mounts
+  useEffect(() => {
+    fetchItems()
+  }, [fetchItems])
 
   const addItem = async () => {
     if (!newItemName.trim()) return
@@ -200,5 +200,3 @@ export function ShoppingList({ listId, initialName }: ShoppingListProps) {
     </Card>
   )
 }
-
-
