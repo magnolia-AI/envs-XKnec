@@ -1,11 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import db from '@/lib/db'
 import { shoppingLists, shoppingListItems } from '@/lib/schema'
 import { eq, and } from 'drizzle-orm'
 
 // GET endpoint - get all shopping lists or a specific list with items
 export async function GET(request: NextRequest) {
   try {
+    // Try to import the database connection
+    let db;
+    try {
+      db = (await import('@/lib/db')).default;
+    } catch (importError) {
+      console.error('Database connection error:', importError);
+      return NextResponse.json({ error: 'Database connection not available' }, { status: 503 });
+    }
+
     const searchParams = request.nextUrl.searchParams
     const listId = searchParams.get('listId')
     
@@ -108,3 +116,4 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
+
