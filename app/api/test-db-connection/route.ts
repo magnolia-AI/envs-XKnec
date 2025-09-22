@@ -2,16 +2,21 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   try {
+    // Check if DATABASE_URL is set in environment
+    const databaseUrl = process.env.DATABASE_URL;
+    
     // Try to import the database connection
     let db;
     try {
       db = (await import('@/lib/db')).default;
-    } catch (importError) {
+    } catch (importError: any) {
       console.error('Database connection error:', importError);
       return NextResponse.json({ 
         error: 'Database connection not available', 
-        importError: importError.message,
-        DATABASE_URL: process.env.DATABASE_URL ? 'Available' : 'Not available'
+        importError: importError.message || 'Unknown error',
+        DATABASE_URL: databaseUrl ? 'Available' : 'Not available',
+        databaseUrlValue: databaseUrl ? databaseUrl.substring(0, 20) + '...' : null,
+        environmentKeys: Object.keys(process.env).filter(key => key.includes('DATABASE') || key.includes('DB')).sort()
       }, { status: 503 });
     }
 
@@ -19,10 +24,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ 
       success: true, 
       message: 'Database connection successful',
-      DATABASE_URL: process.env.DATABASE_URL ? 'Available' : 'Not available'
+      DATABASE_URL: databaseUrl ? 'Available' : 'Not available',
+      databaseUrlValue: databaseUrl ? databaseUrl.substring(0, 20) + '...' : null,
+      environmentKeys: Object.keys(process.env).filter(key => key.includes('DATABASE') || key.includes('DB')).sort()
     });
   } catch (error) {
     console.error('Error testing database connection:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
+
+
