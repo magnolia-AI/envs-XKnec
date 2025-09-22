@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
     const envVars: Record<string, string> = {}
     
     // Filter and mask sensitive variables
-    const sensitiveKeys = ['DATABASE_URL', 'SECRET', 'KEY', 'TOKEN', 'PASSWORD', 'API_KEY']
+    const sensitiveKeys = ['DATABASEURL', 'SECRET', 'KEY', 'TOKEN', 'PASSWORD', 'API_KEY']
     
     for (const [key, value] of Object.entries(process.env)) {
       if (typeof value === 'string') {
