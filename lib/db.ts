@@ -1,4 +1,3 @@
-'use server';
 /*
 This file is used to connect to the database.
 Changing it may break behavior of the magnolia.
