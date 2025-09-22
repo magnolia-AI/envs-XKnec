@@ -9,11 +9,21 @@ export async function GET(request: NextRequest) {
     let db;
     try {
       db = (await import('@/lib/db')).default;
-    } catch (importError: any) {
+    } catch (importError) {
       console.error('Database connection error:', importError);
+      // Properly handle the unknown error type
+      let errorMessage = 'Unknown error';
+      if (importError instanceof Error) {
+        errorMessage = importError.message;
+      } else if (typeof importError === 'string') {
+        errorMessage = importError;
+      } else if (importError && typeof importError === 'object' && 'message' in importError) {
+        errorMessage = String(importError.message);
+      }
+      
       return NextResponse.json({ 
         error: 'Database connection not available', 
-        importError: importError.message || 'Unknown error',
+        importError: errorMessage,
         DATABASE_URL: databaseUrl ? 'Available' : 'Not available',
         databaseUrlValue: databaseUrl ? databaseUrl.substring(0, 20) + '...' : null,
         environmentKeys: Object.keys(process.env).filter(key => key.includes('DATABASE') || key.includes('DB')).sort()
@@ -33,5 +43,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
+
 
 
