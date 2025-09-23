@@ -122,7 +122,7 @@ export default function Home() {
       <section className="container mx-auto px-4 pt-24 pb-20">
         <div className="max-w-[1200px] mx-auto">
           <h1 className="text-4xl font-bold tracking-tight mb-8 text-center">
-            Shopping List
+            NEW Shopping List
           </h1>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
