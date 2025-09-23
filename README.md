@@ -15,7 +15,7 @@ This is a versatile template for building web applications with Next.js and Tail
 
 1. Clone this repository or use it as a template
 2. Install dependencies:
-   ```bash
+   ```bash 
    npm install
    # or
    yarn install
