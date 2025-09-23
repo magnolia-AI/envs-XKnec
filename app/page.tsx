@@ -187,7 +187,7 @@ export default function Home() {
               <Card>
                   <CardContent className="flex items-center justify-center h-64">
                     <p className="text-gray-500 text-center">
-                      Select a shopping list or create a new one to get started
+                      Select a shopping list or create a new one to get started.
                     </p>
                   </CardContent>
                 </Card>
