@@ -5,6 +5,7 @@ const nextConfig = {
   experimental: {
     serverActions: {
       allowedOrigins: ['*.fly.dev', '*.vy.app'],
+      bodySizeLimit: '10mb',
     },
   },
   output: 'standalone',
@@ -61,4 +62,5 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
 
