@@ -30,7 +30,7 @@ export default function RootLayout({
                   <Link href="/">
                     <div className="flex items-center">
                       <Image 
-                        src="/images/vy-logo.svg" 
+                        src="/images/vy-logo.png" 
                         alt="VY Logo" 
                         width={32} 
                         height={32} 
@@ -59,6 +59,7 @@ export default function RootLayout({
     </html>
   )
 }
+
 
 
 
